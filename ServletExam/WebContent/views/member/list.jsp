@@ -37,10 +37,10 @@
 		for(MemberVO mv : memList){
 %>
 		<tr>
-			<td><%out.print(mv.getMemId()); %></td>
-			<td><%out.print(mv.getMemName()); %></td>
-			<td><%out.print(mv.getMemTel()); %></td>
-			<td><%out.print(mv.getMemAddr()); %></td>
+			<td><%=mv.getMemId() %></td>
+			<td><a href="detail.do?memId=<%=mv.getMemId()%>"><%=mv.getMemName()%></a></td>
+			<td><%=mv.getMemTel() %></td>
+			<td><%=mv.getMemAddr() %></td>
 		</tr>
 <%
 		}

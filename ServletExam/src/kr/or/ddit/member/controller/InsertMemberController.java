@@ -3,16 +3,21 @@ package kr.or.ddit.member.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.comm.service.AtchFileServiceImpl;
+import kr.or.ddit.comm.service.IAtchFileService;
+import kr.or.ddit.comm.vo.AtchFileVO;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.member.vo.MemberVO;
 
+@MultipartConfig
 @WebServlet("/member/insert.do")
 public class InsertMemberController extends HttpServlet {
 
@@ -31,8 +36,22 @@ public class InsertMemberController extends HttpServlet {
 		String memTel = req.getParameter("memTel");
 		String memAddr = req.getParameter("memAddr");
 		
+		IAtchFileService fileService = AtchFileServiceImpl.getInstance();
+		
+		AtchFileVO atchFileVO = null;
+		try {
+			atchFileVO = fileService.saveAtchFileList(req); // atchFile ID 들어있다고 가정
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		IMemberService memService = MemberServiceImpl.getInstance();
 		MemberVO mv = new MemberVO(memId, memName, memTel, memAddr);
+		
+		// atchFileId 있다면 꺼내서 추가?
+		if(atchFileVO != null) {
+			mv.setAtchFileId(atchFileVO.getAtchFileId());
+		}
 		
 		int cnt = memService.registMember(mv);
 		

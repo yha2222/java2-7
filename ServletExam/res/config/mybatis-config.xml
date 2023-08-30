@@ -27,6 +27,7 @@
 	
 	<mappers>
 		<mapper resource="mappers/member.xml"/>
+		<mapper resource="mappers/atchFile.xml"/>
 	</mappers>
 	
 </configuration>

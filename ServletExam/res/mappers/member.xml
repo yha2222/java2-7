@@ -28,9 +28,10 @@ INSERT INTO mymember (
 	mem_name,
 	mem_tel,
 	mem_addr,
+	atch_file_id,
 	reg_dt
 	) VALUES
-	( #{memId}, #{memName}, #{memTel}, #{memAddr}, sysdate)
+	( #{memId}, #{memName}, #{memTel}, #{memAddr}, #{atchFileId}, sysdate)
 
 </insert>
 
@@ -39,7 +40,8 @@ INSERT INTO mymember (
 UPDATE mymember
 set mem_name = #{memName},
 	mem_tel = #{memTel},
-	mem_addr = #{memAddr}
+	mem_addr = #{memAddr},
+	atch_file_id = #{atchFileId}
 where mem_id =#{memId}
 
 </update>
@@ -57,6 +59,7 @@ select mem_id as memId,
 	   mem_name as memName,
 	   mem_tel as memTel,
 	   mem_addr as memAddr,
+	   atch_file_id as atchFileId,
 	   reg_dt as regDt
 from mymember
 
@@ -68,6 +71,7 @@ select mem_id as memId,
 	   mem_name as memName,
 	   mem_tel as memTel,
 	   mem_addr as memAddr,
+	   atch_file_id as atchFileId,
 	   reg_dt as regDt
 from mymember 
 where mem_id = #{memId}
@@ -88,6 +92,7 @@ from mymember where mem_id = #{memId}
 	<result column="mem_name" property="memName"/>
 	<result column="mem_tel" property="memTel"/>
 	<result column="mem_addr" property="memAddr"/>
+	<result column="atch_file_id" property="atchFileId"/>
 	<result column="reg_dt" property="regDt"/>
 </resultMap>
 

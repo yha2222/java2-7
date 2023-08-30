@@ -2,6 +2,7 @@ package kr.or.ddit.comm.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class AtchFileServiceImpl implements IAtchFileService {
 	}
 
 	@Override
-	public AtchFileVO saveAtchFileList(HttpServletRequest req) throws Exception { // interface에도 throws 해줘야 에러 안남
+	public AtchFileVO saveAtchFileList(Collection<Part> parts) throws Exception { // interface에도 throws 해줘야 에러 안남
 		
 		String uploadPath = "d:/D_Other/upload_files";
 		
@@ -45,7 +46,7 @@ public class AtchFileServiceImpl implements IAtchFileService {
 		
 		boolean isFirstFile = true;  // 첫번째 파일 여부
 		
-		for(Part part : req.getParts()) {
+		for(Part part : parts) {
 
 			// 파일명 추출
 			String fileName = part.getSubmittedFileName();
@@ -74,7 +75,7 @@ public class AtchFileServiceImpl implements IAtchFileService {
 				// 확장자명 추출
 				// lastIndexOf로 마지막 점 위치 찾아서 리턴 => 0보다 작다 => 확장자명 없다
 				String fileExtension = orignFileName.lastIndexOf(".") < 0 ? "" : 
-					orignFileName.substring(orignFileName.lastIndexOf(".") + 1); // 확장자 잘라냄
+				orignFileName.substring(orignFileName.lastIndexOf(".") + 1); // 확장자 잘라냄
 				
 				// 업로드 파일(원본파일) 저장하기
 				part.write(saveFilePath); // 정해놓은 경로로 저장
@@ -83,7 +84,8 @@ public class AtchFileServiceImpl implements IAtchFileService {
 				atchFileVO.setStreFileNm(saveFileName);
 				atchFileVO.setFileSize(fileSize);
 				atchFileVO.setFileExtsn(fileExtension);
-				atchFileVO.setFileCn(""); // 설명란 -> 공백
+				//atchFileVO.setFileCn(""); // 설명란 -> 공백
+				atchFileVO.setOrignlFileNm(orignFileName);
 				
 				// ATCH_FILE_DETAIL에 저장 - 나머지(첨부)
 				// 오리지널 정보 춫ㄹ

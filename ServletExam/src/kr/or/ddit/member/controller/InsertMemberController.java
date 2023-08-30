@@ -40,7 +40,7 @@ public class InsertMemberController extends HttpServlet {
 		
 		AtchFileVO atchFileVO = null;
 		try {
-			atchFileVO = fileService.saveAtchFileList(req); // atchFile ID 들어있다고 가정
+			atchFileVO = fileService.saveAtchFileList(req.getParts()); // atchFile ID 들어있다고 가정
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

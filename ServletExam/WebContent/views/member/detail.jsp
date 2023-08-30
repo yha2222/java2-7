@@ -41,7 +41,7 @@
 					for(AtchFileVO fileVO : fileList){
 
 			%>
-				<div><a href="#"><%=fileVO.getOrignlFileNm() %></a></div>
+				<div><a href="<%=request.getContextPath() %>/download.do?fileId=<%=fileVO.getAtchFileId() %>&fileSn=<%=fileVO.getFileSn() %>"><%=fileVO.getOrignlFileNm() %></a></div>
 			<%
 					}
 				}

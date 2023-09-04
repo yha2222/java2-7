@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.nio.channels.NonReadableChannelException;
 
 import javax.servlet.ServletException;
@@ -42,9 +43,12 @@ public class FIleDownloadController extends HttpServlet {
 		
 		//resp.setContentType("image/jpeg"); // inline
 		resp.setContentType("application/octet-stream"); // 범용?
+		
+		// URL에는 공백 문자를 포함할 수 없다. URLEncoding을 하면 공백은 (+)로 표시되기 때문에
+		// +문자를 공백 문자인 %20으로 바꿔준다.
 		//보통) resp.setHeader("Content-Type", "application/octet-stream");
 		resp.setHeader("Content-Disposition", "attachment; filename=\""
-							+ atchFileVO.getOrignlFileNm() + "\"");
+							+ URLEncoder.encode(atchFileVO.getOrignlFileNm(), "UTF-8").replaceAll("\\+", "%20") + "\"");
 		
 		FileInputStream fis = new FileInputStream(atchFileVO.getFileStreCours()
 				); // 보낼 파일이 저장된 경로
